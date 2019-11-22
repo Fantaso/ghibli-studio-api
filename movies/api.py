@@ -4,8 +4,6 @@ from typing import Dict, List, Union
 import requests
 
 
-# [{'id':film_id, 'title':'Totoro', 'people':['Renaldo',]}]
-
 class GhibliApi:
     _base_url = 'https://ghibliapi.herokuapp.com'
 
@@ -22,6 +20,8 @@ class GhibliApi:
 
     @classmethod
     def get_film_list_with_cast(cls) -> List[Dict[str, Union[str, List[str]]]]:
+        """[{'id':'45336', 'title':'Totoro', 'people':['Renaldo',]}]"""
+
         cls.films_with_people = cls.query_films().copy()
 
         # for every person get all film's id

@@ -3,7 +3,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 
 from ghibil_studio_api.settings import CACHE_TTL
-from utils.ghibli_api import GhibliApi as api
+from movies.api import GhibliApi as api
 
 
 @method_decorator(cache_page(CACHE_TTL), name='dispatch')
