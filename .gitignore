@@ -1,3 +1,4 @@
 db.*
 user_story.txt
 .idea/*
+geckodriver.log
