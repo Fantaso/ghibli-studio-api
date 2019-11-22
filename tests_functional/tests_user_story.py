@@ -3,7 +3,7 @@ from django.test import TestCase
 from selenium import webdriver
 
 
-class MoviesPageVisitorTest(unittest.TestCase):
+class MoviesPageVisitorTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -15,7 +15,7 @@ class MoviesPageVisitorTest(unittest.TestCase):
         cls.browser.get('http://localhost:8000/movies')
 
     @classmethod
-    def tearDown(cls):
+    def tearDownClass(cls):
         # user closes browser
         cls.browser.quit()
 
@@ -27,18 +27,20 @@ class MoviesPageVisitorTest(unittest.TestCase):
     def test_user_can_see_movie_list(self):
         # user checks the list of all movies from Ghibli Studio
         self.assertEqual('Ghibli Studio Movie List',
-                         self.browser.find_element_by_id('movie-list-title'),
+                         self.browser.find_element_by_id('movie-list-title').text,
                          msg='Can not render movie list')
-        self.assertIn('My Neighbor Totoro',
-                      self.browser.find_elements_by_class_name('movie'),
-                      msg=f'Can not render movie {"My Neighbor Totoro"}')
+        self.assertIn('MY NEIGHBOR TOTORO',
+                      [
+                          title.text.replace('\n', '')
+                          for title in self.browser.find_elements_by_class_name('movie-title')
+                      ],
+                      msg=f'Can not render movie {"MY NEIGHBOR TOTORO"}')
 
     def test_user_can_see_list_of_people_from_each_movie(self):
         # user also checks list of people (cast) for each movie
         self.assertIn('Jiji',
-                      self.browser.find_elements_by_class_name('cast'),
+                      [
+                          people.text.replace('* ', '')
+                          for people in self.browser.find_elements_by_class_name('movie-cast')
+                      ],
                       msg='Can not render cast of people from movie')
-
-
-if __name__ == '__main__':
-    unittest.main()

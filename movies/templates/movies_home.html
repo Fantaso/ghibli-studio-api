@@ -20,12 +20,12 @@
         <div class="movie">
 
             {% if movie.title %}
-                <h3> {{ movie.title|upper }} </h3>
+                <h3 class="movie-title"> {{ movie.title|upper }} </h3>
             {% endif %}
 
             {% if movie.people %}
                 {% for name in movie.people %}
-                    <p class="cast"> * {{ name }} </p>
+                    <p class="movie-cast"> * {{ name }} </p>
                 {% endfor %}
             {% endif %}
 
