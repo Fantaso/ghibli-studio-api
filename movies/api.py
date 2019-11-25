@@ -15,26 +15,18 @@ class GhibliApi:
     _films_url = join(_base_url, 'films')
     _people_url = join(_base_url, 'people')
 
-    films_with_people = []
-
-    def __str__(self):
-        return 'Ghibli API'
-
-    def __repr__(self):
-        return f'{self.__class__.__name__}()'
-
     @classmethod
     def get_film_list_with_cast(cls) -> List[ComplexDict]:
         """[{'id':'45336', 'title':'Totoro', 'people':['Renaldo',]}]"""
 
-        cls.films_with_people = cls.query_films().copy()
+        films_with_people = cls.query_films().copy()
 
         # for every person get all film's id
         for person in cls.query_people():
             for person_film_id in person['films_id']:
 
                 # and compare film id with person's film id
-                for film in cls.films_with_people:
+                for film in films_with_people:
                     if person_film_id == film['id']:
 
                         # people key don't exist. create it.
@@ -43,7 +35,7 @@ class GhibliApi:
 
                         film['people'].append(person['name'])
 
-        return cls.films_with_people
+        return films_with_people
 
     @classmethod
     def query_films(cls) -> List[ComplexDict]:
