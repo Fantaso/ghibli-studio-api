@@ -7,8 +7,8 @@ from movies.api import GhibliApi as api
 
 
 @method_decorator(cache_page(CACHE_TTL), name='dispatch')
-class MoviesHomeView(TemplateView):
-    template_name = 'movies_home.html'
+class MoviesListView(TemplateView):
+    template_name = 'movies_list.html'
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
