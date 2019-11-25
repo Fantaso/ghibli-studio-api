@@ -3,6 +3,11 @@ from typing import Dict, List, Union
 
 import requests
 
+# Type hint
+ComplexDict = Dict[str, Union[str, List[str]]]
+StrDict = Dict[str, str]
+StrListDict = Dict[str, List[str]]
+
 
 class GhibliApi:
     _base_url = 'https://ghibliapi.herokuapp.com'
@@ -19,7 +24,7 @@ class GhibliApi:
         return f'{self.__class__.__name__}()'
 
     @classmethod
-    def get_film_list_with_cast(cls) -> List[Dict[str, Union[str, List[str]]]]:
+    def get_film_list_with_cast(cls) -> List[ComplexDict]:
         """[{'id':'45336', 'title':'Totoro', 'people':['Renaldo',]}]"""
 
         cls.films_with_people = cls.query_films().copy()
@@ -41,14 +46,14 @@ class GhibliApi:
         return cls.films_with_people
 
     @classmethod
-    def query_films(cls) -> List[Dict[str, Union[str, List[str]]]]:
+    def query_films(cls) -> List[ComplexDict]:
         films_data = requests.get(cls._films_url).json()
         films = [cls.parse_film_title_and_id(film) for film in films_data]
 
         return films
 
     @classmethod
-    def query_people(cls) -> List[Dict[str, Union[str, List[str]]]]:
+    def query_people(cls) -> List[ComplexDict]:
         people_data = requests.get(cls._people_url).json()
         people = [
             cls.parse_name_and_films_id(person)
@@ -58,7 +63,7 @@ class GhibliApi:
         return people
 
     @classmethod
-    def parse_film_title_and_id(cls, film: Dict[str, Union[str, List[str]]]) -> Dict[str, str]:
+    def parse_film_title_and_id(cls, film: ComplexDict) -> StrDict:
 
         return {
             'id': film.get('id'),
@@ -66,7 +71,7 @@ class GhibliApi:
         }
 
     @classmethod
-    def parse_name_and_films_id(cls, person: Dict[str, Union[str, List[str]]]) -> Dict[str, List[str]]:
+    def parse_name_and_films_id(cls, person: ComplexDict) -> StrListDict:
 
         return {
             'name': person.get('name'),
