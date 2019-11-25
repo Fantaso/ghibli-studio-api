@@ -8,7 +8,7 @@
   Ghibli Studio API
 </h1>
 
-> Web app caching test case with Django. It consists of caching a single web page for 60 seconds, in which the Django view makes a request to a third party API service for the data (All movies and cast of Ghibli Studio available in that API) that will be rendered as a web page and cached.
+> Web app caching test case with Django and Memcached. It consists of caching a single web page for 60 seconds, in which the Django view makes a request to a third party API service for the data (All movies and cast of Ghibli Studio available in that API) that will be rendered as a web page and cached.
 
 <!-- build -->
 <!-- [![Build Status][travis-image]][travis-link] -->
@@ -122,7 +122,7 @@ python manage.py test
 | :- | :-: | :- |
 | Python                    | ![back-end][python]                   | Back-End |
 | Django                    | ![django][django]                     | Web Framework |
-| Selenium                  | ![selenium][postman]                  | Web browser automation |
+| Selenium                  | ![selenium][selenium]                  | Web browser automation |
 | Requests                  | ![requests][requests]                 | HTTP Library |
 
 <br><br>
@@ -152,4 +152,4 @@ Get in touch -–> [Github][github-profile]
 [python]: readme/python.png
 [django]: readme/django.png
 [selenium]: readme/selenium.png
-[requests]: readme/requests.jpeg
+[requests]: readme/requests.jpg
