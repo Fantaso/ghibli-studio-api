@@ -125,7 +125,7 @@ STATIC_URL = '/static/'
 CACHE_TTL = 60
 
 # Cache settings
-CACHES= {
+CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': [
