@@ -89,7 +89,7 @@ class GhibliApi:
         return {
             'name': person.get('name'),
             'films_id': [
-                cls.parse_film_id(film)
+                cls.parse_film_id_from_url(film)
                 for film in person.get('films')
             ],
         }
