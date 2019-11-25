@@ -10,6 +10,8 @@ StrListDict = Dict[str, List[str]]
 
 
 class GhibliApi:
+    """Main interface to interact with the Ghibli Studio API."""
+
     _base_url = 'https://ghibliapi.herokuapp.com'
 
     _films_url = join(_base_url, 'films')
@@ -17,7 +19,16 @@ class GhibliApi:
 
     @classmethod
     def get_film_list_with_cast(cls) -> List[ComplexDict]:
-        """[{'id':'45336', 'title':'Totoro', 'people':['Renaldo',]}]"""
+        """Returns a list of all films from Ghibli Studio API including
+        people that appear in it.
+
+        e.g.
+        id: film id in Ghibli Studio API
+        title: film's title
+        people: list of person's name that appear in the films.
+
+        [{'id':'45336', 'title':'Totoro', 'people':['Renaldo',]}]
+        """
 
         films_with_people = cls.query_films().copy()
 
@@ -39,6 +50,10 @@ class GhibliApi:
 
     @classmethod
     def query_films(cls) -> List[ComplexDict]:
+        """Requests all films available from Ghibli
+        and return a list with title and film id.
+        """
+
         films_data = requests.get(cls._films_url).json()
         films = [cls.parse_film_title_and_id(film) for film in films_data]
 
@@ -46,6 +61,10 @@ class GhibliApi:
 
     @classmethod
     def query_people(cls) -> List[ComplexDict]:
+        """Requests all people that appear in Ghibli films and
+        returns a list with people's name and a list of films id.
+        """
+
         people_data = requests.get(cls._people_url).json()
         people = [
             cls.parse_name_and_films_id(person)
@@ -56,6 +75,7 @@ class GhibliApi:
 
     @classmethod
     def parse_film_title_and_id(cls, film: ComplexDict) -> StrDict:
+        """Extracts from the film data the title and id."""
 
         return {
             'id': film.get('id'),
@@ -64,6 +84,7 @@ class GhibliApi:
 
     @classmethod
     def parse_name_and_films_id(cls, person: ComplexDict) -> StrListDict:
+        """Extracts from the person data.their name and films id."""
 
         return {
             'name': person.get('name'),
@@ -74,5 +95,7 @@ class GhibliApi:
         }
 
     @classmethod
-    def parse_film_id(cls, film: str) -> str:
+    def parse_film_id_from_url(cls, film: str) -> str:
+        """Extracts the film id from full URL."""
+
         return film.split('/')[-1]
