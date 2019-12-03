@@ -1,4 +1,4 @@
-from os.path import join
+from urllib.parse import urljoin
 from typing import Dict, List, Union
 
 import requests
@@ -14,8 +14,8 @@ class GhibliApi:
 
     _base_url = 'https://ghibliapi.herokuapp.com'
 
-    _films_url = join(_base_url, 'films')
-    _people_url = join(_base_url, 'people')
+    _films_url = urljoin(_base_url, '/films')
+    _people_url = urljoin(_base_url, '/people')
 
     @classmethod
     def get_film_list_with_cast(cls) -> List[ComplexDict]:
